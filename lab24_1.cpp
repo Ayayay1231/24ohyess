@@ -63,4 +63,36 @@ void List::append(int d){
 	size++;
 }
 
-//Write List::remove() here
+void List::remove(int idx){
+    
+    if(root == NULL) return;
+
+    Node *temp;
+
+    
+    if(idx == 0){
+        temp = root;         // เก็บตัวแรกไว้ใน temp
+        root = root->next;   // ขยับ root ไปชี้ที่ Node ตัวที่สองแทน
+        delete temp;         // ลบ temp ทิ้ง (ตรงนี้จะปริ้น ... was deleted.)
+        size--;
+        return;
+    }
+
+    // 3. กรณีที่ต้องการลบ Node ตำแหน่งอื่นๆ
+    Node *current = root;
+    // วนลูปไปหา Node ตำแหน่ง "ก่อนหน้า" ตัวที่เราจะลบ (idx - 1)
+    for(int i = 0; i < idx - 1; i++){
+        
+        if(current->next == NULL) return; 
+        current = current->next;
+    }
+
+    temp = current->next; // temp คือ Node ตัวที่เราต้องการจะลบ
+    if(temp == NULL) return;
+
+    
+    current->next = temp->next; 
+    delete temp; 
+    size--;
+}
+
